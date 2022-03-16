@@ -13,7 +13,18 @@ interface MovieProps {
   Runtime: string;
 }
 
-export function Content() {
+interface GenreResponseProps {
+  id: number;
+  name: 'action' | 'comedy' | 'documentary' | 'drama' | 'horror' | 'family';
+  title: string;
+}
+
+interface ContentProps {
+  selectedGenreId: Number;
+  selectedGenre: GenreResponseProps;
+}
+
+export function Content({selectedGenreId, selectedGenre}: ContentProps) {
   // Complete aqui
   const [movies, setMovies] = useState<MovieProps[]>([]);
 
@@ -21,6 +32,7 @@ export function Content() {
     api.get<MovieProps[]>(`movies/?Genre_id=${selectedGenreId}`).then(response => {
       setMovies(response.data);
     });
+  }, [selectedGenreId]);
   
   return (
     <div className="container">
